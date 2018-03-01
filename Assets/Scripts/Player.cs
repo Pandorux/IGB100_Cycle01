@@ -17,6 +17,9 @@ public class Player : MonoBehaviour {
     public float fireRate = 0.15f;
     private float fireTime;
 
+    public float health = 100;
+    public GameObject deathEffect;
+
     private Vector3 pos;
 
 	// Use this for initialization
@@ -28,6 +31,7 @@ public class Player : MonoBehaviour {
 	void Update () {
         pos = transform.position;
         Movement();
+		Boundary ();
         transform.position = pos;
 
         Shoot();
@@ -56,12 +60,44 @@ public class Player : MonoBehaviour {
             pos.z -= moveSpeed * Time.deltaTime;
     }
 
+	private void Boundary() {
+
+		if (pos.x > GameManager.instance.xBoundary) {
+            pos.x = GameManager.instance.xBoundary;
+		}
+        else if (pos.x < -GameManager.instance.xBoundary)
+        {
+            pos.x = -GameManager.instance.xBoundary;
+		}
+
+        if (pos.z > GameManager.instance.zBoundary)
+        {
+            pos.z = GameManager.instance.zBoundary;
+		}
+        else if (pos.z < -GameManager.instance.zBoundary)
+        {
+            pos.z = -GameManager.instance.zBoundary;
+		}
+	}
+		
+
     private void Shoot()
     {
         if (Input.GetKey(KeyCode.Mouse0) && Time.time > fireTime)
         {
             Instantiate(projectile, projectileSpawnPoint.transform.position, Quaternion.identity);
             fireTime = Time.time + fireRate;
+        }
+    }
+
+    public void TakeDamage(float dmg)
+    {
+        health -= dmg;
+
+        if (health <= 0)
+        {
+            Destroy(this.gameObject);
+            Instantiate(deathEffect, transform.position, transform.rotation);
         }
     }
 }

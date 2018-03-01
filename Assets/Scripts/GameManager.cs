@@ -6,6 +6,11 @@ public class GameManager : MonoBehaviour {
     //Singleton Setup
     public static GameManager instance = null;
 
+	public float xBoundary = 95;
+	public float zBoundary = 35;
+
+    public GameObject player;
+
     // Awake Checks - Singleton setup
     void Awake() {
 
