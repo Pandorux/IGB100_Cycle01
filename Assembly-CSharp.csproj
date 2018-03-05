@@ -70,6 +70,7 @@
      <Compile Include="Assets\Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\Projectile.cs" />
      <Compile Include="Assets\Scripts\RotateSkyBox.cs" />
+     <Compile Include="Assets\Simple Vector Icons\Sample\IconPreview.cs" />
      <None Include="Assets\Effects\Detonator Explosion Framework\Resources\Detonator\Textures\HeatDistort.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
