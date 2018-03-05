@@ -22,6 +22,8 @@ public class Player : MonoBehaviour {
 
     private Vector3 pos;
 
+    public GameObject cursor;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -33,7 +35,7 @@ public class Player : MonoBehaviour {
         Movement();
 		Boundary ();
         transform.position = pos;
-
+        Cursor();
         Shoot();
 	}
 
@@ -80,6 +82,14 @@ public class Player : MonoBehaviour {
 		}
 	}
 		
+    private void Cursor()
+    {
+        Vector3 mp = new Vector3();
+        mp = Input.mousePosition;
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(mp);
+        cursor.transform.position = new Vector3(mousePos.x, 0, mousePos.y);
+        Debug.Log(cursor.transform.position);
+    }
 
     private void Shoot()
     {
