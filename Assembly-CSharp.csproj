@@ -64,6 +64,7 @@
      <Compile Include="Assets\Effects\Detonator Explosion Framework\System\DetonatorSound.cs" />
      <Compile Include="Assets\Effects\Detonator Explosion Framework\System\DetonatorSparks.cs" />
      <Compile Include="Assets\Effects\Detonator Explosion Framework\System\DetonatorSpray.cs" />
+     <Compile Include="Assets\Scripts\Cursor.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
      <Compile Include="Assets\Scripts\EnemySpawner.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
