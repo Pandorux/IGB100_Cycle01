@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour {
     public float moveSpeed = 15;
     public float health = 100;
 
+    public GameObject projectile;
+
     public float damage = 25;
     private float damageRate = 0.2f;
     private float damageTime;

@@ -22,9 +22,6 @@ public class Player : MonoBehaviour {
 
     private Vector3 pos;
 
-    public GameObject cursor;
-    public float cursorHeight;
-
 	// Use this for initialization
 	void Start () {
 		
@@ -36,7 +33,6 @@ public class Player : MonoBehaviour {
         Movement();
 		Boundary ();
         transform.position = pos;
-        Cursor();
         Shoot();
 	}
 
@@ -82,16 +78,6 @@ public class Player : MonoBehaviour {
             pos.z = -GameManager.instance.zBoundary;
 		}
 	}
-		
-    private void Cursor()
-    {
-        Vector3 pos = Input.mousePosition;
-
-        // BUG: Need to reassign z otherwise won't work
-        pos.z = 10;
-        cursor.transform.position = Camera.main.ScreenToWorldPoint(pos);
-
-    }
 
     private void Shoot()
     {

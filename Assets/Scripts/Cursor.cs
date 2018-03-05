@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[DisallowMultipleComponent]
 public class Cursor : MonoBehaviour {
 
     public Image cursorImage;
@@ -20,6 +21,7 @@ public class Cursor : MonoBehaviour {
     [Range(-180, 180)]
     public float turnRate = 5;
 
+    // The next possible time the chargeBar will charge
     private float chargeTime;
 
 	// Use this for initialization
@@ -29,6 +31,7 @@ public class Cursor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        Movement();
         RotateCursor();
 	}
 
@@ -42,12 +45,29 @@ public class Cursor : MonoBehaviour {
     }
 
     private void RotateCursor()
-    {
-
-        //Quaternion rot = 
+    { 
         cursorImage.rectTransform.Rotate(0, 0, turnRate*Time.deltaTime);
-        //rot.z += turnRate * Time.deltaTime;
-        //cursorImage.rectTransform.rotation = rot;
+    }
 
+    private void Movement()
+    {
+        Vector3 pos = Input.mousePosition;
+
+        // BUG: Need to reassign z otherwise won't work
+        pos.z = 10;
+        gameObject.transform.position = Camera.main.ScreenToWorldPoint(pos);
+        UpdateUIPosition(pos);
+    }
+
+    private void UpdateUIPosition(Vector2 pos)
+    {
+        chargeImage.rectTransform.position = pos;
+        cursorImage.rectTransform.position = pos;
+    }
+
+    private void UpdateUIPosition(Vector3 pos)
+    {
+        chargeImage.rectTransform.position = Camera.main.WorldToScreenPoint(gameObject.transform.position);
+        cursorImage.rectTransform.position = Camera.main.WorldToScreenPoint(gameObject.transform.position);
     }
 }
