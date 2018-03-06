@@ -4,14 +4,41 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
 
+    public enum Direction { North, Northeast, East, Southeast, South, Southwest, West, Northwest };
+    Dictionary<string, Vector3> vectors = new Dictionary<string, Vector3>
+    {
+        { "North", new Vector3(0, 0, 5) },
+        { "Northeast", new Vector3(5, 0, 5) },
+        { "East", new Vector3(5, 0, 0) },
+        { "Southeast", new Vector3(5, 0, -5) },
+        { "South", new Vector3(0, 0, -5) },
+        { "Southwest", new Vector3(-5, 0, -5) },
+        { "West", new Vector3(-5, 0, 0) },
+        { "Northwest", new Vector3(-5, 0, 5) }
+    };
+
+    public Direction direction;
+
     public float lifeTime = 3;
     public float moveSpeed = 5;
     public float damage = 100.0f;
+    public GameObject deathEffect;
 
 	// Use this for initialization
 	void Start () {
         Destroy(gameObject, lifeTime);
-	}
+        vectors = new Dictionary<string, Vector3>
+        {
+            { "North", new Vector3(0, 0, moveSpeed) },
+            { "Northeast", new Vector3(moveSpeed, 0, moveSpeed) },
+            { "East", new Vector3(moveSpeed, 0, 0) },
+            { "Southeast", new Vector3(moveSpeed, 0, -moveSpeed) },
+            { "South", new Vector3(0, 0, -moveSpeed) },
+            { "Southwest", new Vector3(-moveSpeed, 0, -moveSpeed) },
+            { "West", new Vector3(-moveSpeed, 0, 0) },
+            { "Northwest", new Vector3(-moveSpeed, 0, moveSpeed) }
+        };
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -20,15 +47,16 @@ public class Projectile : MonoBehaviour {
 
     private void Movement()
     {
-        transform.position += Time.deltaTime * moveSpeed * transform.forward;
+        transform.position += Time.deltaTime * vectors[direction.ToString()];
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "Enemy")
         {
-            OnDestroy(45, other.GetComponent<Enemy>().projectile);
             Destroy(other.gameObject);
+            Instantiate(deathEffect, gameObject.transform.position, Quaternion.identity);
+            OnDeath(45, other.GetComponent<Enemy>().projectile);
             Destroy(this.gameObject);
         }
         else if (other.transform.tag == "Player")
@@ -38,14 +66,26 @@ public class Projectile : MonoBehaviour {
         }
     }
 
-    public void OnDestroy(int startRot, GameObject projectile, int numOfBullets = 4)
+    public void OnDeath(int startRot, GameObject projectile, int numOfBullets = 4)
     {
         float rot = startRot;
+        //int count = 0;
 
-        for (int i = 0; i < numOfBullets; i++)
-        {
-            rot += 90;
-            Instantiate(projectile, gameObject.transform.position, new Quaternion(0, rot, 0, Quaternion.identity.w));
-        }
+        Instantiate(projectile, new Vector3(5, 0, 5), new Quaternion(0, 45, 0, Quaternion.identity.w));
+        Instantiate(projectile, new Vector3(5, 0, -5), new Quaternion(0, 135, 0, Quaternion.identity.w));
+        Instantiate(projectile, new Vector3(-5, 0, -5), new Quaternion(0, 225, 0, Quaternion.identity.w));
+        Instantiate(projectile, new Vector3(-5, 0, 5), new Quaternion(0, 315, 0, Quaternion.identity.w));
+
+        //for (int i = 0; i < numOfBullets; i++)
+        //{
+        //    //count++;
+        //    //Debug.Log("Rot of projectile: " + rot);
+        //    Quaternion qRot = new Quaternion(0, rot, 0, Quaternion.identity.w);
+        //    Instantiate(projectile, new Vector3(0, 0, 0), qRot);
+        //    Debug.Log(qRot);
+        //    rot += 90;
+        //}
+
+        //Debug.Log(count + " projectiles were spawned");
     }
 }
