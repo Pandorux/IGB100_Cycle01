@@ -27,8 +27,25 @@ public class Projectile : MonoBehaviour {
     {
         if (other.transform.tag == "Enemy")
         {
-            other.GetComponent<Enemy>().TakeDamage(damage);
+            OnDestroy(45, other.GetComponent<Enemy>().projectile);
+            Destroy(other.gameObject);
             Destroy(this.gameObject);
+        }
+        else if (other.transform.tag == "Player")
+        {
+            Destroy(other.gameObject);
+            Destroy(this.gameObject);
+        }
+    }
+
+    public void OnDestroy(int startRot, GameObject projectile, int numOfBullets = 4)
+    {
+        float rot = startRot;
+
+        for (int i = 0; i < numOfBullets; i++)
+        {
+            rot += 90;
+            Instantiate(projectile, gameObject.transform.position, new Quaternion(0, rot, 0, Quaternion.identity.w));
         }
     }
 }

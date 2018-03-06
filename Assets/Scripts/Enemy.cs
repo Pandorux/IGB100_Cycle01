@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour {
     public float health = 100;
 
     public GameObject projectile;
+    public int numberOfBulletsSpawnedOnDeath = 4;
 
     public float damage = 25;
     private float damageRate = 0.2f;
