@@ -45,7 +45,7 @@ public class Enemy : MonoBehaviour {
     {
         if (other.transform.tag == "Player" && Time.time > damageTime)
         {
-            other.GetComponent<Player>().
+            other.GetComponent<Player>().DestroySelf();
         }
     }
 }
