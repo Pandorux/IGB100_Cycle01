@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour {
         gameHUD.SetActive(true);
         pauseMenu.SetActive(false);
         gameOverMenu.SetActive(false);
+        Time.timeScale = 1;
     }
 
     public void PauseGame()
@@ -56,6 +58,16 @@ public class GameManager : MonoBehaviour {
     {
         gameOverMenu.SetActive(true);
         Time.timeScale = 0;
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(1);
     }
     
 }

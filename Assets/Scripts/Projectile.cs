@@ -54,6 +54,7 @@ public class Projectile : MonoBehaviour {
         else if (other.transform.tag == "Player")
         {
             other.GetComponent<Player>().DestroySelf();
+            GameManager.instance.GameOver();
             Destroy(gameObject);
         }
     }
