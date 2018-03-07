@@ -45,17 +45,19 @@ public class Projectile : MonoBehaviour {
     {
         if (other.transform.tag == "Enemy")
         {
-            GameObject ex = Instantiate(deathEffect, gameObject.transform.position, Quaternion.identity);
-            ex.transform.localScale = new Vector3(explosionSize, explosionSize, explosionSize);
+            Instantiate(deathEffect, gameObject.transform.position, Quaternion.identity);
             OnDeath(45, other.GetComponent<Enemy>().projectile);
+            if(GameManager.instance.gameRunning)
+                other.gameObject.GetComponent<Enemy>().AwardPoints();
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
         else if (other.transform.tag == "Player")
         {
             other.GetComponent<Player>().DestroySelf();
-            GameManager.instance.GameOver();
             Destroy(gameObject);
+            GameManager.instance.GameOver();
+
         }
     }
 

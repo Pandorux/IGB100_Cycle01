@@ -20,6 +20,11 @@ public class GameManager : MonoBehaviour {
     [HideInInspector]
     public float zBoundary;
 
+    [HideInInspector]
+    public bool gameRunning;
+
+    [Range(0, 10)]
+    public float gameOverDelay;
     public GameObject player;
 
     // Awake Checks - Singleton setup
@@ -42,8 +47,8 @@ public class GameManager : MonoBehaviour {
         gameHUD.SetActive(true);
         pauseMenu.SetActive(false);
         gameOverMenu.SetActive(false);
-        
 
+        gameRunning = true;
         Time.timeScale = 1;
     }
 
@@ -61,8 +66,17 @@ public class GameManager : MonoBehaviour {
 
     public void GameOver()
     {
-        gameOverMenu.SetActive(true);
+        StartCoroutine(GameOver(gameOverDelay));
+    }
+
+    private IEnumerator GameOver(float delay)
+    {
+        gameRunning = false;
+        ScoreManager.instance.StopAllCoroutines();
+        yield return new WaitForSeconds(delay);
         Time.timeScale = 0;
+        gameOverMenu.SetActive(true);
+
     }
 
     public void Restart()
@@ -98,6 +112,7 @@ public class GameManager : MonoBehaviour {
         {
             lenDiff = strLen - curString.Length;
             fill = new string(fillerChar, lenDiff);
+
 
             if (fillOnRight)
             {

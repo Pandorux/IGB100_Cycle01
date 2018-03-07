@@ -101,5 +101,4 @@ public class ScoreManager : MonoBehaviour {
         MultiplierIncrease(amount);
         StartCoroutine(MultiplierIncreaseOverTime(amount, increaseRate));
     }
-
 }
