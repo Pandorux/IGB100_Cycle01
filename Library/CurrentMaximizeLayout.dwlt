@@ -23,7 +23,7 @@ MonoBehaviour:
   m_MinSize: {x: 713, y: 492}
   m_MaxSize: {x: 18008, y: 14042}
   vertical: 0
-  controlID: 2425
+  controlID: 8169
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_MinSize: {x: 436, y: 492}
   m_MaxSize: {x: 14006, y: 14042}
   vertical: 0
-  controlID: 2426
+  controlID: 8170
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -153,7 +153,7 @@ MonoBehaviour:
   - {fileID: 7}
   - {fileID: 8}
   m_Selected: 0
-  m_LastSelected: 2
+  m_LastSelected: 1
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -347,7 +347,7 @@ MonoBehaviour:
   m_MinSize: {x: 234, y: 492}
   m_MaxSize: {x: 10004, y: 14042}
   vertical: 1
-  controlID: 2402
+  controlID: 8372
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -366,8 +366,8 @@ MonoBehaviour:
     y: 0
     width: 625
     height: 570
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 204, y: 221}
+  m_MaxSize: {x: 4004, y: 4021}
   m_ActualView: {fileID: 11}
   m_Panes:
   - {fileID: 11}
@@ -402,9 +402,9 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 84290000
-    m_LastClickedID: 0
-    m_ExpandedIDs: 7afbffff00000000
+    m_SelectedIDs: a82d0000
+    m_LastClickedID: 11688
+    m_ExpandedIDs: 9efbffff00000000c22d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -445,8 +445,8 @@ MonoBehaviour:
     y: 570
     width: 625
     height: 737
-  m_MinSize: {x: 230, y: 250}
-  m_MaxSize: {x: 10000, y: 10000}
+  m_MinSize: {x: 234, y: 271}
+  m_MaxSize: {x: 10004, y: 10021}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -491,19 +491,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Effects
+    - Assets/Scripts
   m_ViewMode: 1
   m_StartGridSize: 61
   m_LastFolders:
-  - Assets/Effects
+  - Assets/Scripts
   m_LastFoldersGridSize: 61
   m_LastProjectPath: H:\repos\IGB100_Cycle01
   m_IsLocked: 1
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 04290000
-    m_LastClickedID: 10500
-    m_ExpandedIDs: 00000000ae27000092290000ce2a000000ca9a3bffffff7f
+    m_SelectedIDs: e4290000
+    m_LastClickedID: 10724
+    m_ExpandedIDs: 000000009027000074290000482a0000b02a0000e42a0000262d000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -531,7 +531,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 541e0000
     m_LastClickedID: 7764
-    m_ExpandedIDs: 00000000ae27000092290000ce2a000000ca9a3bffffff7f
+    m_ExpandedIDs: 000000009027000074290000482a0000b02a0000e42a0000262d000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -556,9 +556,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 84290000
-    m_LastClickedInstanceID: 10628
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: a82d0000
+    m_LastClickedInstanceID: 11688
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: eebbffff8cb9ffffd81b0000c41b00004810ffffee1c0000d4c2ffff0c050000e2e3ffffc69effff8098ffff2896ffffa05ffaffbe1d0000b017ffff58aeffff5ecbfeff3c2000005c2000005c05000080060000861d0000481d000030dcffff141c0000e01e00009081ffffdc200000ec1c0000ba1c0000be1c0000961f00003a2200009c250000ba1f0000de1f0000c21c0000261c0000461c0000481c00003a1c0000281c00006a1d00009c1d0000a82500007424000070240000c4050000c273ffffb42400007a2400007cbbfeff5a240000643e0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -585,7 +585,7 @@ MonoBehaviour:
     m_NewAssetIndexInList: -1
     m_ScrollPosition: {x: 0, y: 0}
     m_GridSize: 61
-  m_DirectoriesAreaWidth: 110
+  m_DirectoriesAreaWidth: 188
 --- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -604,8 +604,8 @@ MonoBehaviour:
     y: 0
     width: 741
     height: 1307
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 277, y: 71}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}

@@ -49,12 +49,12 @@ public class Projectile : MonoBehaviour {
             ex.transform.localScale = new Vector3(explosionSize, explosionSize, explosionSize);
             OnDeath(45, other.GetComponent<Enemy>().projectile);
             Destroy(other.gameObject);
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
         else if (other.transform.tag == "Player")
         {
-            Destroy(other.gameObject);
-            Destroy(this.gameObject);
+            other.GetComponent<Player>().DestroySelf();
+            Destroy(gameObject);
         }
     }
 
@@ -62,21 +62,10 @@ public class Projectile : MonoBehaviour {
     {
         float rot = startRot;
         GameObject[] bullet = new GameObject[] { projectile, projectile, projectile, projectile };
-        //int count = 0;
 
         for (int i = 0; i < 4; i++)
         {
-            bullet[i] = (GameObject)Instantiate(projectile, gameObject.transform.position, new Quaternion(0, rot, 0, Quaternion.identity.w));
-
-            //    //count++;
-            //    //Debug.Log("Rot of projectile: " + rot);
-            //    Quaternion qRot = new Quaternion(0, rot, 0, Quaternion.identity.w);
-            //    Instantiate(projectile, new Vector3(0, 0, 0), qRot);
-            //    Debug.Log(qRot);
-            //    rot += 90;
-            //}
-
-            //Debug.Log(count + " projectiles were spawned");
+            bullet[i] = Instantiate(projectile, gameObject.transform.position, new Quaternion(0, rot, 0, Quaternion.identity.w));
         }
 
         bullet[0].GetComponent<Projectile>().direction = Direction.Northwest;

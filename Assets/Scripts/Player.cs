@@ -17,7 +17,6 @@ public class Player : MonoBehaviour {
     public float fireRate = 0.15f;
     private float fireTime;
 
-    public float health = 100;
     public GameObject deathEffect;
 
     private Vector3 pos;
@@ -88,14 +87,10 @@ public class Player : MonoBehaviour {
         }
     }
 
-    public void TakeDamage(float dmg)
+    public void DestroySelf()
     {
-        health -= dmg;
-
-        if (health <= 0)
-        {
-            Destroy(this.gameObject);
-            Instantiate(deathEffect, transform.position, transform.rotation);
-        }
+        Instantiate(deathEffect, gameObject.transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
+
 }

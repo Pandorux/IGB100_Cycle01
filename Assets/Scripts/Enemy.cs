@@ -41,12 +41,11 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "Player" && Time.time > damageTime)
         {
-            other.transform.GetComponent<Player>().TakeDamage(damage);
-            damageTime = Time.time + damageRate;
+            other.GetComponent<Player>().
         }
     }
 }
