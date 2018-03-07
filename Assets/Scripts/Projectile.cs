@@ -5,30 +5,21 @@ using UnityEngine;
 public class Projectile : MonoBehaviour {
 
     public enum Direction { North, Northeast, East, Southeast, South, Southwest, West, Northwest };
-    Dictionary<string, Vector3> vectors = new Dictionary<string, Vector3>
-    {
-        { "North", new Vector3(0, 0, 5) },
-        { "Northeast", new Vector3(5, 0, 5) },
-        { "East", new Vector3(5, 0, 0) },
-        { "Southeast", new Vector3(5, 0, -5) },
-        { "South", new Vector3(0, 0, -5) },
-        { "Southwest", new Vector3(-5, 0, -5) },
-        { "West", new Vector3(-5, 0, 0) },
-        { "Northwest", new Vector3(-5, 0, 5) }
-    };
+    Dictionary<string, Vector3> vectors;
 
     public Direction direction;
 
     public float lifeTime = 3;
     public float moveSpeed = 5;
     public float damage = 100.0f;
+    public float explosionSize;
     public GameObject deathEffect;
 
 	// Use this for initialization
 	void Start () {
         Destroy(gameObject, lifeTime);
         vectors = new Dictionary<string, Vector3>
-        {
+        {         
             { "North", new Vector3(0, 0, moveSpeed) },
             { "Northeast", new Vector3(moveSpeed, 0, moveSpeed) },
             { "East", new Vector3(moveSpeed, 0, 0) },
@@ -54,9 +45,10 @@ public class Projectile : MonoBehaviour {
     {
         if (other.transform.tag == "Enemy")
         {
-            Destroy(other.gameObject);
-            Instantiate(deathEffect, gameObject.transform.position, Quaternion.identity);
+            GameObject ex = Instantiate(deathEffect, gameObject.transform.position, Quaternion.identity);
+            ex.transform.localScale = new Vector3(explosionSize, explosionSize, explosionSize);
             OnDeath(45, other.GetComponent<Enemy>().projectile);
+            Destroy(other.gameObject);
             Destroy(this.gameObject);
         }
         else if (other.transform.tag == "Player")
@@ -66,26 +58,30 @@ public class Projectile : MonoBehaviour {
         }
     }
 
-    public void OnDeath(int startRot, GameObject projectile, int numOfBullets = 4)
+    public void OnDeath(int startRot, GameObject projectile/*, int numOfBullets = 4*/)
     {
         float rot = startRot;
+        GameObject[] bullet = new GameObject[] { projectile, projectile, projectile, projectile };
         //int count = 0;
 
-        Instantiate(projectile, new Vector3(5, 0, 5), new Quaternion(0, 45, 0, Quaternion.identity.w));
-        Instantiate(projectile, new Vector3(5, 0, -5), new Quaternion(0, 135, 0, Quaternion.identity.w));
-        Instantiate(projectile, new Vector3(-5, 0, -5), new Quaternion(0, 225, 0, Quaternion.identity.w));
-        Instantiate(projectile, new Vector3(-5, 0, 5), new Quaternion(0, 315, 0, Quaternion.identity.w));
+        for (int i = 0; i < 4; i++)
+        {
+            bullet[i] = (GameObject)Instantiate(projectile, gameObject.transform.position, new Quaternion(0, rot, 0, Quaternion.identity.w));
 
-        //for (int i = 0; i < numOfBullets; i++)
-        //{
-        //    //count++;
-        //    //Debug.Log("Rot of projectile: " + rot);
-        //    Quaternion qRot = new Quaternion(0, rot, 0, Quaternion.identity.w);
-        //    Instantiate(projectile, new Vector3(0, 0, 0), qRot);
-        //    Debug.Log(qRot);
-        //    rot += 90;
-        //}
+            //    //count++;
+            //    //Debug.Log("Rot of projectile: " + rot);
+            //    Quaternion qRot = new Quaternion(0, rot, 0, Quaternion.identity.w);
+            //    Instantiate(projectile, new Vector3(0, 0, 0), qRot);
+            //    Debug.Log(qRot);
+            //    rot += 90;
+            //}
 
-        //Debug.Log(count + " projectiles were spawned");
+            //Debug.Log(count + " projectiles were spawned");
+        }
+
+        bullet[0].GetComponent<Projectile>().direction = Direction.Northwest;
+        bullet[1].GetComponent<Projectile>().direction = Direction.Northeast;
+        bullet[2].GetComponent<Projectile>().direction = Direction.Southwest;
+        bullet[3].GetComponent<Projectile>().direction = Direction.Southeast;
     }
 }
