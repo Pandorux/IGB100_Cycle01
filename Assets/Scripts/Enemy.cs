@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour {
     public float health = 100;
 
     public GameObject projectile;
+    public int numberOfBulletsSpawnedOnDeath = 4;
 
     public float damage = 25;
     private float damageRate = 0.2f;
@@ -40,12 +41,11 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "Player" && Time.time > damageTime)
         {
-            other.transform.GetComponent<Player>().TakeDamage(damage);
-            damageTime = Time.time + damageRate;
+            other.GetComponent<Player>().DestroySelf();
         }
     }
 }
