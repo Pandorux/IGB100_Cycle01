@@ -17,13 +17,9 @@ public class Player : MonoBehaviour {
     public float fireRate = 0.15f;
     private float fireTime;
 
-    public float health = 100;
     public GameObject deathEffect;
 
     private Vector3 pos;
-
-    public GameObject cursor;
-    public float cursorHeight;
 
 	// Use this for initialization
 	void Start () {
@@ -36,7 +32,6 @@ public class Player : MonoBehaviour {
         Movement();
 		Boundary ();
         transform.position = pos;
-        Cursor();
         Shoot();
 	}
 
@@ -82,16 +77,6 @@ public class Player : MonoBehaviour {
             pos.z = -GameManager.instance.zBoundary;
 		}
 	}
-		
-    private void Cursor()
-    {
-        Vector3 pos = Input.mousePosition;
-
-        // BUG: Need to reassign z otherwise won't work
-        pos.z = 10;
-        cursor.transform.position = Camera.main.ScreenToWorldPoint(pos);
-
-    }
 
     private void Shoot()
     {
@@ -102,14 +87,10 @@ public class Player : MonoBehaviour {
         }
     }
 
-    public void TakeDamage(float dmg)
+    public void DestroySelf()
     {
-        health -= dmg;
-
-        if (health <= 0)
-        {
-            Destroy(this.gameObject);
-            Instantiate(deathEffect, transform.position, transform.rotation);
-        }
+        Instantiate(deathEffect, gameObject.transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
+
 }
