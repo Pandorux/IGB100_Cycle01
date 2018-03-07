@@ -45,33 +45,66 @@ public class Projectile : MonoBehaviour {
     {
         if (other.transform.tag == "Enemy")
         {
-            GameObject ex = Instantiate(deathEffect, gameObject.transform.position, Quaternion.identity);
-            ex.transform.localScale = new Vector3(explosionSize, explosionSize, explosionSize);
-            OnDeath(45, other.GetComponent<Enemy>().projectile);
+            Instantiate(deathEffect, gameObject.transform.position, Quaternion.identity);
+            OnDeath(45, other.GetComponent<Enemy>().projectile, other.GetComponent<Enemy>().numberOfBulletsSpawnedOnDeath);
+            if(GameManager.instance.gameRunning)
+                other.gameObject.GetComponent<Enemy>().AwardPoints();
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
         else if (other.transform.tag == "Player")
         {
             other.GetComponent<Player>().DestroySelf();
-            GameManager.instance.GameOver();
             Destroy(gameObject);
+            GameManager.instance.GameOver();
+
         }
     }
 
-    public void OnDeath(int startRot, GameObject projectile/*, int numOfBullets = 4*/)
+    public void OnDeath(int startRot, GameObject projectile, int numOfBullets = 4)
     {
         float rot = startRot;
-        GameObject[] bullet = new GameObject[] { projectile, projectile, projectile, projectile };
+        numOfBullets = numOfBullets == 8 || numOfBullets == 4 ? numOfBullets : 4;
+        GameObject[] bullet = new GameObject[numOfBullets];
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < numOfBullets; i++)
         {
             bullet[i] = Instantiate(projectile, gameObject.transform.position, new Quaternion(0, rot, 0, Quaternion.identity.w));
         }
 
-        bullet[0].GetComponent<Projectile>().direction = Direction.Northwest;
-        bullet[1].GetComponent<Projectile>().direction = Direction.Northeast;
-        bullet[2].GetComponent<Projectile>().direction = Direction.Southwest;
-        bullet[3].GetComponent<Projectile>().direction = Direction.Southeast;
+        if (numOfBullets == 8)
+        {
+            bullet[0].GetComponent<Projectile>().direction = Direction.North;
+            bullet[1].GetComponent<Projectile>().direction = Direction.Northeast;
+            bullet[2].GetComponent<Projectile>().direction = Direction.East;
+            bullet[3].GetComponent<Projectile>().direction = Direction.Southeast;
+            bullet[4].GetComponent<Projectile>().direction = Direction.South;
+            bullet[5].GetComponent<Projectile>().direction = Direction.Southwest;
+            bullet[6].GetComponent<Projectile>().direction = Direction.West;
+            bullet[7].GetComponent<Projectile>().direction = Direction.Northwest;
+        }
+        else
+        {
+            int pattern = Random.Range(0, 2);
+            
+
+            switch (pattern)
+            {
+                case 0:
+                    bullet[0].GetComponent<Projectile>().direction = Direction.Northeast;
+                    bullet[1].GetComponent<Projectile>().direction = Direction.Southeast;
+                    bullet[2].GetComponent<Projectile>().direction = Direction.Southwest;
+                    bullet[3].GetComponent<Projectile>().direction = Direction.Northwest;
+                    break;
+
+                case 1:
+                    bullet[0].GetComponent<Projectile>().direction = Direction.North;
+                    bullet[1].GetComponent<Projectile>().direction = Direction.East;
+                    bullet[2].GetComponent<Projectile>().direction = Direction.South;
+                    bullet[3].GetComponent<Projectile>().direction = Direction.West;
+                    break;
+            }
+        }
+
     }
 }
