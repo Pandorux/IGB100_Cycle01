@@ -6,6 +6,10 @@ public class GameManager : MonoBehaviour {
     //Singleton Setup
     public static GameManager instance = null;
 
+    public GameObject gameHUD;
+    public GameObject pauseMenu;
+    public GameObject gameOverMenu;
+
     [HideInInspector]
     public float xBoundary;
 
@@ -29,9 +33,29 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
     }
 
+    void Start()
+    {
+        gameHUD.SetActive(true);
+        pauseMenu.SetActive(false);
+        gameOverMenu.SetActive(false);
+    }
+
+    public void PauseGame()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void UnpauseGame()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1;
+    }
+
     public void GameOver()
     {
-
+        gameOverMenu.SetActive(true);
+        Time.timeScale = 0;
     }
     
 }
