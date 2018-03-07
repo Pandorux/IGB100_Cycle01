@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
@@ -10,6 +11,8 @@ public class GameManager : MonoBehaviour {
     public GameObject gameHUD;
     public GameObject pauseMenu;
     public GameObject gameOverMenu;
+    public Text scoreText;
+    public Text multiplierText;
 
     [HideInInspector]
     public float xBoundary;
@@ -39,6 +42,8 @@ public class GameManager : MonoBehaviour {
         gameHUD.SetActive(true);
         pauseMenu.SetActive(false);
         gameOverMenu.SetActive(false);
+        
+
         Time.timeScale = 1;
     }
 
@@ -69,5 +74,41 @@ public class GameManager : MonoBehaviour {
     {
         SceneManager.LoadScene(1);
     }
-    
+
+    public void UpdateText(Text text, string value)
+    {
+        text.text = value;
+    }
+
+    /// <summary>
+    /// Fill in space of text with a particular character if the text length is too small
+    /// </summary>
+    /// <param name="strLen">The desired length of the string</param>
+    /// <param name="fillerChar"></param>
+    /// <param name="curString"></param>
+    /// <param name="fillOnRight"></param>
+    /// <returns></returns>
+    public string FillTextSpace(int strLen, char fillerChar, string curString, bool fillOnRight = true)
+    {
+        int lenDiff = 0;
+        string newStr = "";
+        string fill = "";
+
+        if (strLen > curString.Length)
+        {
+            lenDiff = strLen - curString.Length;
+            fill = new string(fillerChar, lenDiff);
+
+            if (fillOnRight)
+            {
+                newStr = curString + fill;
+            }
+            else
+            {
+                newStr = fill + curString;
+            }
+        }
+
+        return newStr;
+    }
 }

@@ -22,7 +22,7 @@ public class ScoreManager : MonoBehaviour {
     [Tooltip("The default amount that the score multiplier will increase by")]
     public float multiplierIncreaseAmount;
 
-    private float _multiplier = 1;
+    private float _multiplier;
     [HideInInspector()]
     public float multiplier
     {
@@ -49,11 +49,26 @@ public class ScoreManager : MonoBehaviour {
 
     void Awake()
     {
-        instance = this;
+        //Check if instance already exists
+        if (instance == null)
+
+            //if not, set instance to this
+            instance = this;
+
+        //If instance already exists and it's not this:
+        else if (instance != this)
+            //Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+            Destroy(gameObject);
     }
 
     void Start()
     {
+        _score = 0;
+        multiplier = 1;
+
+        GameManager.instance.UpdateText(GameManager.instance.scoreText, GameManager.instance.FillTextSpace(10, '0', _score.ToString(), false));
+        GameManager.instance.UpdateText(GameManager.instance.multiplierText, 'x' + _multiplier.ToString());
+
         StartCoroutine(ScoreIncreaseOverTime(scoreIncreaseAmount, scoreIncreaseRate));
         StartCoroutine(MultiplierIncreaseOverTime(multiplierIncreaseAmount, multiplierIncreaseRate));
     }
@@ -64,12 +79,13 @@ public class ScoreManager : MonoBehaviour {
 
         _score += amount * _multiplier;
         rounded = (int)_score;
-        //UIManager_Game.instance.UpdateText(UIManager_Game.instance.scoreText, UIManager_Game.instance.FillTextSpace(10, '0', rounded.ToString(), false));
+        GameManager.instance.UpdateText(GameManager.instance.scoreText, GameManager.instance.FillTextSpace(10, '0', rounded.ToString(), false));
     }
 
     public void MultiplierIncrease(float amount)
     {
         _multiplier += amount;
+        GameManager.instance.UpdateText(GameManager.instance.multiplierText, 'x' + _multiplier.ToString());
     }
 
     private IEnumerator ScoreIncreaseOverTime(int amount, float increaseRate, float scoreMulti = 1)
