@@ -15,6 +15,7 @@ public class MainMenuManager : MonoBehaviour {
     // Use this for initialization
     void Start() {
         instructionsActive = false;
+        Instructions();
     }
 
     // Update is called once per frame
@@ -24,8 +25,8 @@ public class MainMenuManager : MonoBehaviour {
 
     public void Instructions()
     {
-        //instructionsMenu.SetActive(instructionsActive);
-        //mainMenu.SetActive(!instructionsActive);
+        instructionsMenu.SetActive(instructionsActive);
+        mainMenu.SetActive(!instructionsActive);
     }
 
     public void LoadGame()
