@@ -46,7 +46,7 @@ public class Projectile : MonoBehaviour {
         if (other.transform.tag == "Enemy")
         {
             Instantiate(deathEffect, gameObject.transform.position, Quaternion.identity);
-            OnDeath(45, other.GetComponent<Enemy>().projectile, other.GetComponent<Enemy>().numberOfBulletsSpawnedOnDeath);
+            OnDeath(other.GetComponent<Enemy>().projectile, other.GetComponent<Enemy>().numberOfBulletsSpawnedOnDeath);
             if(GameManager.instance.gameRunning)
                 other.gameObject.GetComponent<Enemy>().AwardPoints();
             Destroy(other.gameObject);
@@ -61,15 +61,20 @@ public class Projectile : MonoBehaviour {
         }
     }
 
-    public void OnDeath(int startRot, GameObject projectile, int numOfBullets = 4)
+    public void OnDeath(GameObject projectile, int numOfBullets = 4)
     {
-        float rot = startRot;
         numOfBullets = numOfBullets == 8 || numOfBullets == 4 ? numOfBullets : 4;
+        float rotAmount = 360 / numOfBullets;
+        int pattern = Random.Range(0, 2);
+        float rot = numOfBullets == 8 ? 0 : 45 * pattern;
+
         GameObject[] bullet = new GameObject[numOfBullets];
 
         for (int i = 0; i < numOfBullets; i++)
         {
             bullet[i] = Instantiate(projectile, gameObject.transform.position, new Quaternion(0, rot, 0, Quaternion.identity.w));
+            Debug.Log("rot:" + rot);
+            rot += rotAmount;
         }
 
         if (numOfBullets == 8)
@@ -85,19 +90,16 @@ public class Projectile : MonoBehaviour {
         }
         else
         {
-            int pattern = Random.Range(0, 2);
-            
-
             switch (pattern)
             {
-                case 0:
+                case 1:
                     bullet[0].GetComponent<Projectile>().direction = Direction.Northeast;
                     bullet[1].GetComponent<Projectile>().direction = Direction.Southeast;
                     bullet[2].GetComponent<Projectile>().direction = Direction.Southwest;
                     bullet[3].GetComponent<Projectile>().direction = Direction.Northwest;
                     break;
 
-                case 1:
+                case 0:
                     bullet[0].GetComponent<Projectile>().direction = Direction.North;
                     bullet[1].GetComponent<Projectile>().direction = Direction.East;
                     bullet[2].GetComponent<Projectile>().direction = Direction.South;
