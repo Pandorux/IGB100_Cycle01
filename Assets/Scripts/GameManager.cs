@@ -13,6 +13,12 @@ public class GameManager : MonoBehaviour {
     public GameObject gameOverMenu;
     public Text scoreText;
     public Text multiplierText;
+    public GameObject[] spawners;
+
+    [Range(1, 5)]
+    public int startDifficulty = 1;
+    public int maxDifficulty = 5;
+    public float difficultyIncreaseRate;
 
     [HideInInspector]
     public float xBoundary;
@@ -50,6 +56,12 @@ public class GameManager : MonoBehaviour {
 
         gameRunning = true;
         Time.timeScale = 1;
+
+        for (int i = 0; i < spawners.Length; i++)
+            spawners[i].SetActive(false);
+
+        AssignDifficulty(startDifficulty);
+        StartCoroutine(IncreaseDifficulty(difficultyIncreaseRate, 1));
     }
 
     public void PauseGame()
@@ -125,5 +137,49 @@ public class GameManager : MonoBehaviour {
         }
 
         return newStr;
+    }
+
+    private void AssignDifficulty(int dif = 1)
+    {
+        dif = dif <= 0 ? 1 :
+            dif >= 6 ? 5 : dif;
+
+        if(dif >= 1)
+        {
+            spawners[0].gameObject.SetActive(true);
+        }
+
+        if(dif >= 2)
+        {
+            spawners[1].gameObject.SetActive(true);
+            spawners[2].gameObject.SetActive(true);
+        }
+
+        if(dif >= 3)
+        {
+            spawners[3].gameObject.SetActive(true);
+            spawners[4].gameObject.SetActive(true);
+        }
+
+        if(dif >= 4)
+        {
+            spawners[5].gameObject.SetActive(true);
+        }
+
+        if(dif == 5)
+        {
+            spawners[6].gameObject.SetActive(true);
+            spawners[7].gameObject.SetActive(true);
+        }
+
+    }
+
+    private IEnumerator IncreaseDifficulty(float delay, int curDif)
+    {
+        yield return new WaitForSeconds(delay);
+        AssignDifficulty(curDif + 1);
+
+        if (curDif + 1 < maxDifficulty)
+            StartCoroutine(IncreaseDifficulty(delay, curDif + 1));
     }
 }

@@ -32,7 +32,6 @@ public class Enemy : MonoBehaviour {
         if (GameManager.instance.player)
         {
             transform.LookAt(GameManager.instance.player.transform.position);
-
         }
 
         transform.position += transform.forward * moveSpeed * Time.deltaTime;
