@@ -30,7 +30,7 @@ public class Player : MonoBehaviour {
 	void Update () {
         pos = transform.position;
         Movement();
-		Boundary ();
+        Boundary ();
         transform.position = pos;
         Shoot();
 	}
